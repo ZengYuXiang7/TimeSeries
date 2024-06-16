@@ -22,6 +22,8 @@ from utils.plotter import MetricsPlotter
 from utils.trainer import get_loss_function, get_optimizer
 from utils.utils import optimizer_zero_grad, optimizer_step, lr_scheduler_step, set_settings, set_seed
 from utils.utils import makedir
+from visualize import visualize
+
 global log, args
 
 torch.set_default_dtype(torch.float32)
@@ -174,4 +176,6 @@ if __name__ == '__main__':
 
     # Run Experiment
     RunExperiments(log, args)
+
+    visualize(args)
 
