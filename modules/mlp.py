@@ -10,25 +10,25 @@ class MLPTimeRefiner(Module):
     def __init__(self, args):
         super().__init__()
         self.args = args
-        self.window = args.window
+        self.num_windows = args.num_windows
         self._time_linear = Linear(args.dimension, args.dimension)
         self.context = Sequential(
-            Linear(self.window * args.dimension, args.dimension),
+            Linear(self.num_windows * args.dimension, args.dimension),
             LayerNorm(args.dimension),
             ReLU(),
             Linear(args.dimension, args.dimension)
         )
 
-        self.rainbow = torch.arange(-self.window + 1, 1).reshape(1, -1).to(args.device)
+        self.rainbow = torch.arange(-self.num_windows + 1, 1).reshape(1, -1).to(args.device)
         self.attn = Sequential(Linear(2 * args.dimension, 1), Tanh())
 
     def forward(self, time_embeds):
-        bs, window, dimension = time_embeds.size()
+        bs, num_windows, dimension = time_embeds.size()
 
         # attention score
         query = time_embeds.reshape(bs, -1)
         local_context = self.context(query)
-        local_context = local_context.unsqueeze(1).repeat(1, window, 1)
+        local_context = local_context.unsqueeze(1).repeat(1, num_windows, 1)
         query = torch.cat([time_embeds, local_context], dim=-1)
         attn_score = self.attn(query)
 
@@ -39,7 +39,7 @@ class MLPTimeRefiner(Module):
         return self._time_linear(time_embeds)
 
     def to_seq_id(self, tids):
-        tids = tids.reshape(-1, 1).repeat(1, self.args.window)
+        tids = tids.reshape(-1, 1).repeat(1, self.args.num_windows)
         tids += self.rainbow - 1
         tids = tids.relu()
         return tids

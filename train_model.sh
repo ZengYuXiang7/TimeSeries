@@ -13,7 +13,7 @@ datasets="cpu"
 densities="0.80"
 py_files="train_model"
 #models="lstm"
-models="lstm"
+models="mlp"
 #models="lstm mlp"
 
 for py_file in $py_files
