@@ -1,0 +1,46 @@
+# Builtin Configurations(DO NOT CHANGE THESE CONFIGURATIONS unless you know exactly what you are doing)
+seed: 0
+device: 'cpu'
+rounds: 1
+epochs: 150
+patience: 30
+
+# Model
+dataset: 'TimeSeries'
+model: 'ours'
+density: 0.80
+train_size: 100
+
+# Debug configuration
+debug: 0
+saved: 1
+record: 1
+verbose: 1
+experiment: 0
+path: './datasets/'
+
+# Learning configuration
+bs: 64
+lr: 0.001
+decay: 0.0001
+
+# Training tools
+loss_func: 'L1Loss'
+optim: 'AdamW'
+program_test: 0
+logger: 'None'
+
+# Hyperparameter
+dimension: 32
+num_windows: 12
+num_preds: 1
+# Other configuration
+ablation: 0
+classification: 0
+
+
+
+---
+# Config description for each option
+seed: 'Random seed for initialization, default: 0'
+# Additional configurations from the template might need to be manually matched or adjusted as needed.
