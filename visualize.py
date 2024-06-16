@@ -106,7 +106,7 @@ def visualize_predictions(reals, preds, args):
     plt.ylabel("Values")
     plt.legend()
     plt.savefig(f'./results/predictions_{args.model}.png')
-    plt.show()
+    # plt.show()
 
 
 def visualize(log, args):
@@ -128,14 +128,13 @@ def visualize(log, args):
         windows, value = batch
         windows, value = windows.to(model.args.device), value.to(model.args.device)
         pred = model.forward(windows)
-        preds.append(pred)
-        reals.append(value)
+        preds.append(pred.reshape(-1, 1))
+        reals.append(value.reshape(-1, 1))
     reals = torch.cat(reals, dim=0)
     preds = torch.cat(preds, dim=0)
-
-    # Calculate metrics
+    log.only_print(str(reals.shape) + str(preds.shape))
     metrics_error = ErrorMetrics(reals * datamodule.max_value, preds * datamodule.max_value, model.args)
-    log(f'MAE={metrics_error["MAE"]:.4f} RMSE={metrics_error["RMSE"]:.4f} NMAE={metrics_error["NMAE"]:.4f} NRMSE={metrics_error["NRMSE"]:.4f}')
+    log.only_print(f'MAE={metrics_error["MAE"]:.4f} RMSE={metrics_error["RMSE"]:.4f} NMAE={metrics_error["NMAE"]:.4f} NRMSE={metrics_error["NRMSE"]:.4f}')
 
     # Visualize predictions vs actual values
     visualize_predictions(reals.cpu().detach().numpy(), preds.cpu().detach().numpy(), args)

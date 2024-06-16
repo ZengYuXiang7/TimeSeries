@@ -116,7 +116,7 @@ def RunOnce(args, runId, log):
     try:
         # Load the best model parameters
         args.record = False
-        model_path = f'./checkpoints/{args.model}_{args.seed}.pt'
+        model_path = f'./checkpoints/{log_filename}.pt'
         model.load_state_dict(torch.load(model_path))
         results = model.evaluate_one_epoch(datamodule, 'test')
         log.only_print(f'MAE={results["MAE"]:.4f} RMSE={results["RMSE"]:.4f} NMAE={results["NMAE"]:.4f} NRMSE={results["NRMSE"]:.4f}')
@@ -139,7 +139,7 @@ def RunOnce(args, runId, log):
         log.show_test_error(runId, monitor, results, sum_time)
         # Save the best model parameters
         makedir('./checkpoints')
-        model_path = f'./checkpoints/{args.model}_{args.seed}.pt'
+        model_path = f'./checkpoints/{log_filename}.pt'
         torch.save(monitor.best_model, model_path)
         log.only_print(f'Model parameters saved to {model_path}')
 

@@ -5,11 +5,6 @@ import torch
 from modules.pred_layer import Predictor
 import pickle
 
-import tracemalloc
-
-# Enable tracing of memory allocations
-tracemalloc.start()
-
 class LSTM(torch.nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, args):
         super(LSTM, self).__init__()

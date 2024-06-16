@@ -22,17 +22,19 @@ class experiment:
 
     def load_data(self, args):
         import pandas as pd
+        import numpy as np
+
         data = pd.read_csv('./datasets/all_six_datasets/weather/weather.csv').to_numpy()[:, 1:]
+        data = data[:len(data) - (len(data) % args.num_preds), :]
         dataX, dataY = [], []
-        for i in range(len(data) - args.num_windows - 1):
-            a = list(data[i: (i + args.num_windows)])
-            dataX.append(a)
-            dataY.append(data[i+args.num_windows:i+args.num_windows+args.num_preds, -1])
-        dataX, dataY = np.asarray(dataX).astype(np.float32), np.asarray(dataY).astype(np.float32)
-        # print(dataX.shape, dataY.reshape(-1, 1).shape)
-        # data = np.concatenate([dataX, dataY.reshape(-1, 1, 1)], axis=1).astype(np.float32)
-        data = dataX, dataY
-        return data
+        for i in range(len(data) - args.num_windows - args.num_preds + 1):
+            dataX.append(data[i: (i + args.num_windows)])
+            dataY.append(data[i + args.num_windows: i + args.num_windows + args.num_preds, -1])
+        dataX = np.asarray(dataX).astype(np.float32)
+        dataY = np.asarray(dataY).astype(np.float32)
+        # print(dataX.shape, dataY.shape)  # This print statement helps you debug and see the shape of dataX and dataY
+        return dataX, dataY
+
 
     def preprocess_data(self, data, args):
         x, y = data
@@ -63,6 +65,7 @@ class DataModule:
         # indices = np.random.permutation(len(x))
         # x, y = x[indices], y[indices]
 
+        print(y.shape)
         max_value = y.max()
         y /= max_value
 

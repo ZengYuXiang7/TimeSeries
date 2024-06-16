@@ -5,7 +5,7 @@ ulimit -a
 # 定义变量
 experiment=1
 run_name='Experiment'
-rounds=1 epochs=150 patience=30 device='cpu'
+rounds=1 epochs=1 patience=30 device='cpu'
 batch_size=64 learning_rate=0.001 decay=0.001
 record=1 program_test=0 verbose=1 classification=0
 dimensions="40"
@@ -16,9 +16,8 @@ py_files="train_model"
 #models="rnn"
 models="lstm"
 #models="attlstm"
-#models="lstm mlp"
-num_windows=12 num_preds=1
-
+#models="lstm mlp attlstm"
+num_windows=12 num_preds=4
 
 for py_file in $py_files
 do
