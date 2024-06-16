@@ -113,28 +113,36 @@ def RunOnce(args, runId, log):
     model = Model(datamodule, args)
     monitor = EarlyStopping(args)
 
-    # Setup training tool
-    model.setup_optimizer(args)
-    train_time = []
-    for epoch in range(args.epochs):
-        epoch_loss, time_cost = model.train_one_epoch(datamodule)
-        valid_error = model.evaluate_one_epoch(datamodule, 'valid')
-        monitor.track_one_epoch(epoch, model, valid_error)
-        train_time.append(time_cost)
-        log.show_epoch_error(runId, epoch, monitor, epoch_loss, valid_error, train_time)
-        plotter.append_epochs(valid_error)
-        if monitor.early_stop:
-            break
-    model.load_state_dict(monitor.best_model)
-    sum_time = sum(train_time[: monitor.best_epoch])
-    results = model.evaluate_one_epoch(datamodule, 'test')
-    log.show_test_error(runId, monitor, results, sum_time)
+    try:
+        # Load the best model parameters
+        args.record = False
+        model_path = f'./checkpoints/{args.model}_{args.seed}.pt'
+        model.load_state_dict(torch.load(model_path))
+        results = model.evaluate_one_epoch(datamodule, 'test')
+        log.only_print(f'MAE={results["MAE"]:.4f} RMSE={results["RMSE"]:.4f} NMAE={results["NMAE"]:.4f} NRMSE={results["NRMSE"]:.4f}')
+    except:
+        # Setup training tool
+        model.setup_optimizer(args)
+        train_time = []
+        for epoch in range(args.epochs):
+            epoch_loss, time_cost = model.train_one_epoch(datamodule)
+            valid_error = model.evaluate_one_epoch(datamodule, 'valid')
+            monitor.track_one_epoch(epoch, model, valid_error)
+            train_time.append(time_cost)
+            log.show_epoch_error(runId, epoch, monitor, epoch_loss, valid_error, train_time)
+            plotter.append_epochs(valid_error)
+            if monitor.early_stop:
+                break
+        model.load_state_dict(monitor.best_model)
+        sum_time = sum(train_time[: monitor.best_epoch])
+        results = model.evaluate_one_epoch(datamodule, 'test')
+        log.show_test_error(runId, monitor, results, sum_time)
+        # Save the best model parameters
+        makedir('./checkpoints')
+        model_path = f'./checkpoints/{args.model}_{args.seed}.pt'
+        torch.save(monitor.best_model, model_path)
+        log.only_print(f'Model parameters saved to {model_path}')
 
-    # Save the best model parameters
-    makedir('./checkpoints')
-    model_path = f'./checkpoints/{args.model}_{args.seed}.pt'
-    torch.save(monitor.best_model, model_path)
-    # log.only_print(f'Model parameters saved to {model_path}')
     return results
 
 
@@ -177,5 +185,5 @@ if __name__ == '__main__':
     # Run Experiment
     RunExperiments(log, args)
 
-    visualize(args)
+    visualize(log, args)
 

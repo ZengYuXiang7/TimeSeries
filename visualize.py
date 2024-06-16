@@ -18,12 +18,11 @@ from utils.config import get_config
 from utils.logger import Logger
 from utils.metrics import ErrorMetrics
 from utils.plotter import MetricsPlotter
-from utils.trainer import get_loss_function
+from utils.trainer import get_loss_function, get_optimizer
 from utils.utils import set_settings, set_seed
 global log, args
 
 torch.set_default_dtype(torch.float32)
-
 
 class Model(torch.nn.Module):
     def __init__(self, data, args):
@@ -99,7 +98,7 @@ class Model(torch.nn.Module):
 
 
 def visualize_predictions(reals, preds, args):
-    plt.figure(dpi=500)
+    plt.figure(dpi=700)
     plt.plot(reals, label='Actual Values')
     plt.plot(preds, label='Predicted Values')
     plt.title(f"Predicted vs Actual Values ({args.model})")
@@ -110,16 +109,7 @@ def visualize_predictions(reals, preds, args):
     plt.show()
 
 
-def visualize(args):
-    set_settings(args)
-    # logger plotter
-    exper_detail = f"Dataset : {args.dataset.upper()}, Model : {args.model}, Density : {args.density}"
-    log_filename = f'w{args.num_windows}_p{args.num_preds}_r{args.dimension}'
-    log = Logger(log_filename, exper_detail, args)
-    plotter = MetricsPlotter(log_filename, args)
-    args.log = log
-    log(str(args.__dict__))
-
+def visualize(log, args):
     # Set seed
     set_seed(args.seed + 0)
 
@@ -153,4 +143,11 @@ def visualize(args):
 
 if __name__ == '__main__':
     args = get_config()
-    visualize(args)
+    set_settings(args)
+    # logger plotter
+    exper_detail = f"Dataset : {args.dataset.upper()}, Model : {args.model}, Density : {args.density}"
+    log_filename = f'w{args.num_windows}_p{args.num_preds}_r{args.dimension}'
+    log = Logger(log_filename, exper_detail, args)
+    args.log = log
+    log(str(args.__dict__))
+    visualize(log, args)
