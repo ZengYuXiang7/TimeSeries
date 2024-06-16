@@ -28,7 +28,7 @@ class experiment:
             a = list(data[i: (i + args.num_windows)])
             dataX.append(a)
             dataY.append(data[i+args.num_windows:i+args.num_windows+args.num_preds, -1])
-        dataX, dataY = np.array(dataX).astype(np.float32), np.array(dataY).astype(np.float32)
+        dataX, dataY = np.asarray(dataX).astype(np.float32), np.asarray(dataY).astype(np.float32)
         # print(dataX.shape, dataY.reshape(-1, 1).shape)
         # data = np.concatenate([dataX, dataY.reshape(-1, 1, 1)], axis=1).astype(np.float32)
         data = dataX, dataY

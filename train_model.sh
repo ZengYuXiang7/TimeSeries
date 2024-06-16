@@ -15,6 +15,8 @@ py_files="train_model"
 #models="lstm"
 models="mlp"
 #models="lstm mlp"
+num_windows=12 num_preds=2
+
 
 for py_file in $py_files
 do
@@ -45,7 +47,9 @@ do
                           --experiment $experiment \
                           --record $record \
                           --verbose $verbose \
-                          --classification $classification
+                          --classification $classification \
+                          --num_preds $num_preds \
+                          --num_windows $num_windows
 #                          --train_size $train_size \
 
                 done

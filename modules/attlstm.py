@@ -37,12 +37,12 @@ class AttLstm(torch.nn.Module):
         #
         self.trans = torch.nn.Linear(input_size, hidden_size)
         self.time_encoder = AttnLSTMTimeRefiner(args)
-        self.predictor = Predictor(self.hidden_size, self.hidden_size, 1)
+        self.predictor = Predictor(self.hidden_size, self.hidden_size, self.args.num_preds)
 
     def forward(self, x):
         x = x.to(torch.float32)  # 确保输入是float32类型
         x = self.trans(x)
         output = self.time_encoder(x)  # 获取LSTM输出和隐状态
         y = self.predictor(output)  # 只使用最后一个时间步的输出进行预测
-        return y.flatten()
+        return y
 

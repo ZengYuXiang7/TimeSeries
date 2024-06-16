@@ -46,7 +46,7 @@ class Model(torch.nn.Module):
 
     def forward(self, windows):
         y = self.model.forward(windows)
-        return y.flatten()
+        return y
 
     def setup_optimizer(self, args):
         self.to(args.device)
@@ -63,6 +63,7 @@ class Model(torch.nn.Module):
             windows, value = train_Batch
             windows, value = windows.to(self.args.device), value.to(self.args.device)
             pred = self.forward(windows)
+            # print(pred.shape, value.shape)
             loss = self.loss_function(pred, value)
             self.optimizer.zero_grad()
             loss.backward()

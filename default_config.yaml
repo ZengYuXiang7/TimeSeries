@@ -7,7 +7,7 @@ patience: 30
 
 # Model
 dataset: 'TimeSeries'
-model: 'ours'
+model: 'lstm'
 density: 0.80
 train_size: 100
 

@@ -55,7 +55,7 @@ class MLP(Module):
         #
         self.trans = torch.nn.Linear(input_size, hidden_size)
         self.time_encoder = MLPTimeRefiner(args)
-        self.predictor = Predictor(self.hidden_size, self.hidden_size, 1)
+        self.predictor = Predictor(self.hidden_size, self.hidden_size, self.args.num_preds)
     
     def forward(self, x):
         x = x.to(torch.float32)  # 确保输入是float32类型
