@@ -35,6 +35,7 @@ class Model(torch.nn.Module):
         self.hidden_size = args.dimension
         if args.model == 'rnn':
             self.model = RNN(self.input_size, args.dimension, 1, args)
+
         elif args.model == 'lstm':
             self.model = LSTM(self.input_size, args.dimension, 1, args)
 

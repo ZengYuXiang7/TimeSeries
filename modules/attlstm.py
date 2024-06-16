@@ -17,7 +17,6 @@ class AttnLSTMTimeRefiner(torch.nn.Module):
         self._time_linear = torch.nn.Linear(args.dimension, args.dimension)
         self.lstm = torch.nn.LSTM(args.dimension, args.dimension, batch_first=False)
         self.attn = torch.nn.Sequential(torch.nn.Linear(args.dimension, 1), torch.nn.Tanh())
-        self.rainbow = torch.arange(-self.num_windows + 1, 1).reshape(1, -1).to(args.device)
 
     def attention_layer(self, lstm_output):
         attention_scores = self.attn(lstm_output).squeeze(-1)  # [bs, window]

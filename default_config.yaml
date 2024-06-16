@@ -31,7 +31,7 @@ program_test: 0
 logger: 'None'
 
 # Hyperparameter
-dimension: 32
+dimension: 40
 num_windows: 12
 num_preds: 1
 # Other configuration

@@ -12,9 +12,10 @@ dimensions="40"
 datasets="cpu"
 densities="0.80"
 py_files="train_model"
-models="rnn"
+#models="mlp"
+#models="rnn"
 #models="lstm"
-#models="attlstm"
+models="attlstm"
 #models="lstm mlp"
 num_windows=12 num_preds=1
 
