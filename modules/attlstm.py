@@ -30,6 +30,7 @@ class AttnLSTMTimeRefiner(torch.nn.Module):
         time_embeds, _ = self.attention_layer(outputs)
         return time_embeds
 
+
 class AttLstm(torch.nn.Module):
     def __init__(self, input_size, hidden_size, num_layers, args):
         super().__init__()
@@ -37,7 +38,6 @@ class AttLstm(torch.nn.Module):
         self.input_size = input_size
         self.hidden_size = hidden_size
         self.num_layers = num_layers
-        #
         self.trans = torch.nn.Linear(input_size, hidden_size)
         self.time_encoder = AttnLSTMTimeRefiner(args)
         self.predictor = Predictor(self.hidden_size, self.hidden_size, self.args.num_preds)
@@ -45,7 +45,7 @@ class AttLstm(torch.nn.Module):
     def forward(self, x):
         x = x.to(torch.float32)  # 确保输入是float32类型
         x = self.trans(x)
-        output = self.time_encoder(x)  # 获取LSTM输出和隐状态
-        y = self.predictor(output)  # 只使用最后一个时间步的输出进行预测
+        output = self.time_encoder(x)
+        y = self.predictor(output)
         return y
 

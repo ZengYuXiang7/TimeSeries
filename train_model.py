@@ -13,6 +13,7 @@ from data import experiment, DataModule
 from modules.attlstm import AttLstm
 from modules.lstm import LSTM
 from modules.mlp import MLP
+from modules.rnn import RNN
 from utils.config import get_config
 from utils.logger import Logger
 from utils.metrics import ErrorMetrics
@@ -32,7 +33,9 @@ class Model(torch.nn.Module):
         self.args = args
         self.input_size = data.x.shape[-1]
         self.hidden_size = args.dimension
-        if args.model == 'lstm':
+        if args.model == 'rnn':
+            self.model = RNN(self.input_size, args.dimension, 1, args)
+        elif args.model == 'lstm':
             self.model = LSTM(self.input_size, args.dimension, 1, args)
 
         elif args.model == 'mlp':

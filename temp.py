@@ -33,7 +33,7 @@ class LSTM(torch.nn.Module):
             return None
 
         try:
-            output, (hn, cn) = self.lstm(x)  # 获取LSTM输出和隐状态
+            output, (hn, cn) = self.lstm(x)
         except RuntimeError as e:
             print(f"Runtime error during LSTM forward pass: {e}")
             return None
@@ -47,7 +47,7 @@ class LSTM(torch.nn.Module):
         print(f"Last time step output shape: {last_output.shape}")
 
         try:
-            y = self.predictor(last_output)  # 只使用最后一个时间步的输出进行预测
+            y = self.predictor(last_output)
         except RuntimeError as e:
             print(f"Runtime error during prediction: {e}")
             return None
