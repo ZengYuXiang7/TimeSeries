@@ -16,21 +16,18 @@ class AttnLSTMTimeRefiner(torch.nn.Module):
         self.num_windows = args.num_windows
         self._time_linear = torch.nn.Linear(args.dimension, args.dimension)
         self.lstm = torch.nn.LSTM(args.dimension, args.dimension, batch_first=False)
-        self.attn = torch.nn.Sequential(torch.nn.Linear(2 * args.dimension, 1), torch.nn.Tanh())
+        self.attn = torch.nn.Sequential(torch.nn.Linear(args.dimension, 1), torch.nn.Tanh())
         self.rainbow = torch.arange(-self.num_windows + 1, 1).reshape(1, -1).to(args.device)
+
+    def attention_layer(self, lstm_output):
+        attention_scores = self.attn(lstm_output).squeeze(-1)  # [bs, window]
+        attention_weights = torch.nn.functional.softmax(attention_scores, dim=1)  # [bs, window]
+        context_vector = torch.sum(attention_weights.unsqueeze(-1) * lstm_output, dim=1)  # [bs, hidden_dim]
+        return context_vector, attention_weights
 
     def forward(self, time_embeds):
         outputs, (hs, _) = self.lstm(time_embeds)
-        hss = hs.repeat(time_embeds.size(0), 1, 1)
-        combined_feats = torch.cat([outputs, hss], dim=-1)
-        # print("Combined features shape:", combined_feats.shape)
-        attn = self.attn(combined_feats)
-        attn = torch.softmax(attn, dim=1)  # 使用 softmax 计算注意力权重
-        # print("Attention shape:", attn.shape)
-        time_embeds = torch.sum(outputs * attn, dim=1)  # 按时间步聚合
-        # print("Time embeddings after attention shape:", time_embeds.shape)
-        time_embeds = self._time_linear(time_embeds)
-        # print("Final output shape:", time_embeds.shape)
+        time_embeds, _ = self.attention_layer(outputs)
         return time_embeds
 
 class AttLstm(torch.nn.Module):
