@@ -5,8 +5,8 @@ ulimit -a
 # 定义变量
 experiment=1
 run_name='Experiment'
-rounds=1 epochs=1 patience=30 device='cpu'
-batch_size=64 learning_rate=0.001 decay=0.001
+rounds=1 epochs=150 patience=30 device='cpu'
+batch_size=64
 record=1 program_test=0 verbose=1 classification=0
 dimensions="40"
 datasets="cpu"
@@ -17,7 +17,8 @@ py_files="train_model"
 models="lstm"
 #models="attlstm"
 #models="lstm mlp attlstm"
-num_windows=12 num_preds=4
+num_windows="12 24 36 48"
+num_preds="1 3 6 12"
 
 for py_file in $py_files
 do
@@ -25,34 +26,36 @@ do
     do
         for dataset in $datasets
         do
-						for density in $densities
+            for density in $densities
             do
-            		for model in $models
+                for model in $models
                 do
-                    python ./$py_file.py \
-                          --device $device \
-                          --logger $run_name \
-                          --rounds $rounds \
-                          --density $density \
-                          --dataset $dataset \
-                          --patience $patience \
-                          --model $model \
-                          --bs $batch_size \
-                          --epochs $epochs \
-                          --patience $patience \
-                          --bs $batch_size \
-                          --lr $learning_rate \
-                          --decay $decay \
-                          --program_test $program_test \
-                          --dimension $dim \
-                          --experiment $experiment \
-                          --record $record \
-                          --verbose $verbose \
-                          --classification $classification \
-                          --num_preds $num_preds \
-                          --num_windows $num_windows
-#                          --train_size $train_size \
-
+                    for window in $num_windows
+                    do
+                        for pred in $num_preds
+                        do
+                            python ./$py_file.py \
+                                  --device $device \
+                                  --logger $run_name \
+                                  --rounds $rounds \
+                                  --density $density \
+                                  --dataset $dataset \
+                                  --patience $patience \
+                                  --model $model \
+                                  --bs $batch_size \
+                                  --epochs $epochs \
+                                  --patience $patience \
+                                  --bs $batch_size \
+                                  --program_test $program_test \
+                                  --dimension $dim \
+                                  --experiment $experiment \
+                                  --record $record \
+                                  --verbose $verbose \
+                                  --classification $classification \
+                                  --num_preds $pred \
+                                  --num_windows $window
+                        done
+                    done
                 done
             done
         done

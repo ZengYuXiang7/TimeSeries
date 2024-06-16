@@ -23,9 +23,7 @@ from utils.trainer import get_loss_function, get_optimizer
 from utils.utils import optimizer_zero_grad, optimizer_step, lr_scheduler_step, set_settings, set_seed
 from utils.utils import makedir
 from visualize import visualize
-
 global log, args
-
 torch.set_default_dtype(torch.float32)
 
 
@@ -114,12 +112,14 @@ def RunOnce(args, runId, log):
     monitor = EarlyStopping(args)
 
     try:
-        # Load the best model parameters
         args.record = False
         model_path = f'./checkpoints/{log_filename}.pt'
         model.load_state_dict(torch.load(model_path))
         results = model.evaluate_one_epoch(datamodule, 'test')
-        log.only_print(f'MAE={results["MAE"]:.4f} RMSE={results["RMSE"]:.4f} NMAE={results["NMAE"]:.4f} NRMSE={results["NRMSE"]:.4f}')
+        if not args.classification:
+            log.only_print(f'MAE={results["MAE"]:.4f} RMSE={results["RMSE"]:.4f} NMAE={results["NMAE"]:.4f} NRMSE={results["NRMSE"]:.4f}')
+        else:
+            log.only_print(f'Acc={results["Acc"]:.4f} F1={results["F1"]:.4f} Precision={results["P"]:.4f} Recall={results["Recall"]:.4f}')
     except:
         # Setup training tool
         model.setup_optimizer(args)
@@ -142,7 +142,6 @@ def RunOnce(args, runId, log):
         model_path = f'./checkpoints/{log_filename}.pt'
         torch.save(monitor.best_model, model_path)
         log.only_print(f'Model parameters saved to {model_path}')
-
     return results
 
 
