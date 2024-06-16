@@ -13,9 +13,9 @@ datasets="cpu"
 densities="0.80"
 py_files="train_model"
 #models="lstm"
-models="mlp"
+models="attlstm"
 #models="lstm mlp"
-num_windows=12 num_preds=2
+num_windows=12 num_preds=1
 
 
 for py_file in $py_files
