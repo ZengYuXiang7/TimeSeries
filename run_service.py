@@ -1,4 +1,5 @@
 import torch
+import os
 from exp.exp_model import Model
 from data_provider.generate_financial import process_date_columns, query_fund_data
 from data_provider.get_financial import get_group_idx
@@ -47,13 +48,45 @@ def get_start_date(end_date: str, window_size: int) -> str:
     start_dt = end_dt - timedelta(days=window_size)
     return start_dt.strftime("%Y-%m-%d")
 
+
+def filter_model(idx):
+    all_scenario = [[16, 7], [36, 30], [20, 60], [20, 90]]
+    all_results = []
+    
+    for now_scenario in all_scenario:
+        pred_len = now_scenario[-1]
+        # 构建文件路径
+        file_path = f'./results/metrics/Model_financial_Dataset_financial_Multi_{idx}_pred_{pred_len}.pkl'
+        
+        # 如果文件不存在，直接跳过并返回 False
+        if not os.path.exists(file_path):
+            return False
+        
+        try:
+            with open(file_path, 'rb') as f:
+                df = pickle.load(f)
+                Acc = df.get('Acc_10', None)  # 使用 `.get()` 避免 KeyError
+                if Acc is not None:
+                    all_results.append(Acc)
+                else:
+                    return False  # 如果 'Acc_10' 不存在，返回 False
+        except Exception as e:
+            print(f"Error loading file {file_path}: {e}")
+            return False  # 捕获异常并返回 False
+    
+    # 如果 all_results 非空，计算均值
+    if all_results:
+        return np.mean(all_results) < 0.40
+    else:
+        return False  # 如果没有有效的结果，返回 False
+
 def get_history_data(get_group_idx, current_date, config):
     all_history_input = []
-    start_date = get_start_date(current_date, window_size=64)
+    start_date = get_start_date(current_date, window_size=120)
     fund_dict = query_fund_data(get_group_idx, start_date, current_date)
     for key, value in fund_dict.items():
         df = process_date_columns(value)
-        df = df[-config.seq_len:, :]
+        df = df[-40:, :]
         all_history_input.append(df)
     data = all_history_input
     return data
@@ -61,9 +94,8 @@ def get_history_data(get_group_idx, current_date, config):
 def check_input(all_history_input, config):
     data = np.stack(all_history_input, axis=0)
     data = data.transpose(1, 0, 2)
-    
     # 只取符合模型的历史天数
-    data = data[-config.seq_len:, :, :]
+    data = data[:, :, :]
     return data
 
 def get_pretrained_model(config):
@@ -113,7 +145,10 @@ def predict_torch_model(model, history_input, config):
     # 因为模型改成了多变量预测多变量，按照预测结果的最后一个变量作为预测值
     pred_value = pred_value[:, :, -1]
     pred_value = np.abs(pred_value)
-    pred_value, _ = constrain_nav_prediction(pred_value)
+    bar = np.mean(history_input[:, :, -1]) * 0.5
+    A = np.mean(history_input[:, :, -1])
+    B = np.mean(pred_value)
+    pred_value, _ = constrain_nav_prediction(pred_value, bar=bar, scale=A/B)
     return pred_value
 
 def get_sql_format_data(pred_value, cleaned_input):
@@ -164,7 +199,7 @@ def insert_pred_to_sql(df, table_name):
 
 # [128, 16, 33, 3])
 def start_server(current_date, table_name = 'temp_sql'):
-    # drop_sql_temp(table_name)
+    drop_sql_temp(table_name)
 
     print(f"\n📅 当前预测日期: {current_date}")
     print(f"➡️ 输入序列长度: {config.seq_len}, 预测长度: {config.pred_len}")
@@ -173,34 +208,56 @@ def start_server(current_date, table_name = 'temp_sql'):
         data = np.array(pickle.load(f))
         df = data[:, 1].astype(np.float32)
     group_num = int(df.max() + 1)
+    all_scenario = [[16, 7], [36, 30], [20, 60], [20, 90]]
     for i in range(group_num):
         # 27
+        config.idx = i
+        group_fund_code = get_group_idx(i)
+        print(f"📊 获取基金组共 {len(group_fund_code)} 个基金列表中")
+
+        # 过滤基金
+        if filter_model(i):
+            print('❗跳过，这组模型巨垃圾！')
+            continue 
+
         try:
-            config.idx = i
-            group_fund_code = get_group_idx(i)
-            print(f"📊 获取基金组共 {len(group_fund_code)} 个基金列表中")
-
+            final_input = np.zeros((90, len(group_fund_code)))
             history_input = get_history_data(group_fund_code, current_date, config)
-            print(f"📈 历史数据已获取。列表长度: {len(history_input)}")
-
             cleaned_input = check_input(history_input, config)
             print(f"🧹 清洗后的输入数据维度: {cleaned_input.shape}")  # 应为 [seq_len, group_num, feature_dim]
+            prev_pred_len = 0
+            for now_scenario in all_scenario:
+                config.seq_len = now_scenario[0]
+                config.pred_len = now_scenario[1]
+                log_filename, exper_detail = get_experiment_name(config)
+                log.filename = log_filename
 
-            model = get_pretrained_model(config)
-            print("🤖 模型加载完成。")
+                now_history_input = cleaned_input[-config.seq_len:, :, :]
+                print(f"📈 历史数据已获取。列表长度: {len(now_history_input)}")
 
-            pred_value = predict_torch_model(model, cleaned_input, config)
-            print(f"📉 预测结果维度: {pred_value.shape}")
+                model = get_pretrained_model(config)
+                print("🤖 模型加载完成。")
 
-            pred_value_sql = get_sql_format_data(pred_value, cleaned_input)
-            print(f"🧾 预测结果已转为 DataFrame，准备写入数据库。表格 shape: {pred_value_sql.shape}")
-            print(pred_value_sql.head(2))  # 打印前两行以核验内容结构
+                pred_value = predict_torch_model(model, now_history_input, config)
+                print(f"📉 预测结果维度: {pred_value.shape}")
 
-            insert_pred_to_sql(pred_value_sql, table_name)
+                # 叠放策略
+                start_idx = prev_pred_len
+                end_idx = config.pred_len
+                final_input[start_idx:end_idx, :] = pred_value[start_idx:end_idx, :]
+                prev_pred_len = config.pred_len
+
+                pred_value_sql = get_sql_format_data(pred_value, cleaned_input)
+                print(f"🧾 预测结果已转为 DataFrame，准备写入数据库。表格 shape: {pred_value_sql.shape}")
+                print(pred_value_sql.head(3))  # 打印前两行以核验内容结构
+
+                insert_pred_to_sql(pred_value_sql, table_name)
         except Exception as e:
-            raise e
-            print(e)
+            print(f"❗{e}")
             continue
+
+        print(f"-" * 180)
+
 
     return pred_value_sql
 
@@ -209,6 +266,7 @@ if __name__ == '__main__':
     log_filename, exper_detail = get_experiment_name(config)
     plotter = MetricsPlotter(log_filename, config)
     log = Logger(log_filename, exper_detail, plotter, config)
+    config.multi_dataset = True
     print("✅ 配置加载完成。")
     current_date = datetime.now().strftime('%Y-%m-%d')
     pred_value = start_server(current_date)

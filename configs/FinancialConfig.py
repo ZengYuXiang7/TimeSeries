@@ -8,7 +8,7 @@ from configs.default_config import *
 class FinancialConfig(ExperimentConfig, BaseModelConfig, LoggerConfig, DatasetInfo, TrainingConfig, OtherConfig):
     model: str = 'financial'
     bs: int = 16
-    d_model: int = 32
+    d_model: int = 56
     epochs: int = 100
     loss_func: str = 'MSELoss'  # L1Loss  MSELoss
     patience: int = 10
@@ -20,13 +20,13 @@ class FinancialConfig(ExperimentConfig, BaseModelConfig, LoggerConfig, DatasetIn
     multi_dataset: bool = True  # False True
     spliter_ratio: str = '6:2:2'
 
-    seq_len: int = 17
+    seq_len: int = 16
     pred_len: int = 7
     input_size: int = 3
     
     # 组件专区
     num_layers: int = 2
-    norm_method: str = 'layer'
+    norm_method: str = 'rms'
     ffn_method: str = 'ffn'
     att_method: str = 'self'
     dis_method: str = 'None'
