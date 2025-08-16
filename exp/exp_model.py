@@ -53,6 +53,9 @@ class Model(BasicModel):
         elif config.model == 'dft':
             self.model = DFTDecomModel(config)
 
+        elif config.model == 'tide':
+            self.model = TIDE(config)
+
         elif config.model == 'transformer_library':
             self.model = TransformerLibrary(config)
 
