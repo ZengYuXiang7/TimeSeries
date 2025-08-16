@@ -1,0 +1,78 @@
+|2025-07-19 20:54:38| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.1
+|2025-07-19 20:54:38| MAE - 0.2118 MSE - 0.1738 RMSE - 0.4169 MAPE - 10.5474 NMAE - 0.3479 NRMSE - 0.5215 Acc_10 - 0.0517 train_time - 9.5789
+|2025-07-19 20:59:19| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 192, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.1
+|2025-07-19 20:59:19| MAE - 0.2647 MSE - 0.2321 RMSE - 0.4817 MAPE - 13.9312 NMAE - 0.4341 NRMSE - 0.6019 Acc_10 - 0.0396 train_time - 11.9305
+|2025-07-19 21:08:48| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-19 21:08:48| MAE - 0.2120 MSE - 0.1741 RMSE - 0.4172 MAPE - 10.7454 NMAE - 0.3482 NRMSE - 0.5218 Acc_10 - 0.0518 train_time - 9.6577
+|2025-07-19 21:13:23| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 192, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-19 21:13:23| MAE - 0.2655 MSE - 0.2334 RMSE - 0.4831 MAPE - 14.0215 NMAE - 0.4354 NRMSE - 0.6035 Acc_10 - 0.0395 train_time - 11.8558
+|2025-07-20 10:08:47| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 10:08:47| MAE - 0.2120 MSE - 0.1741 RMSE - 0.4172 MAPE - 10.7454 NMAE - 0.3482 NRMSE - 0.5218 Acc_10 - 0.0518 train_time - 9.5687
+|2025-07-20 10:13:22| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 192, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 10:13:22| MAE - 0.2655 MSE - 0.2334 RMSE - 0.4831 MAPE - 14.0215 NMAE - 0.4354 NRMSE - 0.6035 Acc_10 - 0.0395 train_time - 11.8461
+|2025-07-20 10:20:48| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 336, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 10:20:48| MAE - 0.3193 MSE - 0.3126 RMSE - 0.5591 MAPE - 12.8553 NMAE - 0.5224 NRMSE - 0.6970 Acc_10 - 0.0314 train_time - 20.3914
+|2025-07-20 10:43:58| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 720, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 10:43:58| MAE - 0.3730 MSE - 0.4052 RMSE - 0.6365 MAPE - 14.4487 NMAE - 0.6105 NRMSE - 0.7954 Acc_10 - 0.0257 train_time - 76.5379
+|2025-07-20 12:35:16| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 12:35:16| MAE - 0.2121 MSE - 0.1739 RMSE - 0.4170 MAPE - 10.8365 NMAE - 0.3483 NRMSE - 0.5216 Acc_10 - 0.0515 train_time - 7.2671
+|2025-07-20 12:39:50| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 192, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 12:39:50| MAE - 0.2651 MSE - 0.2325 RMSE - 0.4822 MAPE - 13.8811 NMAE - 0.4348 NRMSE - 0.6024 Acc_10 - 0.0395 train_time - 11.8293
+|2025-07-20 12:47:17| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 336, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 12:47:17| MAE - 0.3195 MSE - 0.3130 RMSE - 0.5594 MAPE - 13.0474 NMAE - 0.5229 NRMSE - 0.6974 Acc_10 - 0.0314 train_time - 20.4241
+|2025-07-20 13:07:42| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 720, Noise_Steps : 40, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 13:07:42| MAE - 0.3746 MSE - 0.4073 RMSE - 0.6381 MAPE - 14.5736 NMAE - 0.6131 NRMSE - 0.7973 Acc_10 - 0.0257 train_time - 76.4049
+|2025-07-20 14:17:04| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Noise_Steps : 100, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 14:17:04| MAE - 0.2131 MSE - 0.1744 RMSE - 0.4175 MAPE - 10.7853 NMAE - 0.3499 NRMSE - 0.5223 Acc_10 - 0.0509 train_time - 7.2369
+|2025-07-20 14:22:25| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 192, Noise_Steps : 100, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 14:22:25| MAE - 0.2646 MSE - 0.2317 RMSE - 0.4813 MAPE - 13.2547 NMAE - 0.4340 NRMSE - 0.6014 Acc_10 - 0.0398 train_time - 11.8779
+|2025-07-20 14:32:26| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 336, Noise_Steps : 100, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 14:32:26| MAE - 0.3225 MSE - 0.3175 RMSE - 0.5633 MAPE - 12.6535 NMAE - 0.5278 NRMSE - 0.7023 Acc_10 - 0.0309 train_time - 24.2616
+|2025-07-20 14:56:40| Dataset : weather, Model : transformer2, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 720, Noise_Steps : 100, Noise_Scale : 1.0, Lamda : 0.0001
+|2025-07-20 14:56:40| MAE - 0.3727 MSE - 0.4066 RMSE - 0.6375 MAPE - 13.9352 NMAE - 0.6101 NRMSE - 0.7966 Acc_10 - 0.0258 train_time - 88.4230
+
+
+|2025-07-21 15:25:08| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Constraint : False
+|2025-07-21 15:25:08| MAE - 12.9080 MSE - 2217.2988 RMSE - 47.0882 MAPE - 1705260.2637 NMAE - 0.0773 NRMSE - 0.1267 Acc_10 - 0.4259 train_time - 9.0808
+
+|2025-07-21 15:25:53| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Constraint : False
+|2025-07-21 15:25:53| MAE - 0.2067 MSE - 0.1664 RMSE - 0.4079 MAPE - 10.1898 NMAE - 0.3395 NRMSE - 0.5102 Acc_10 - 0.0530 train_time - 8.9079
+
+
+
+|2025-07-21 15:26:44| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 192, Constraint : False
+|2025-07-21 15:26:44| MAE - 0.2567 MSE - 0.2203 RMSE - 0.4694 MAPE - 13.9918 NMAE - 0.4210 NRMSE - 0.5865 Acc_10 - 0.0400 train_time - 9.8715
+
+
+|2025-07-30 12:04:26| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Constraint : False
+|2025-07-30 12:04:26| MAE - 0.2092 MSE - 0.1638 RMSE - 0.4047 MAPE - 11.2476 NMAE - 0.3436 NRMSE - 0.5063 Acc_10 - 0.0502 train_time - 146.2778
+|2025-07-30 12:09:22| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 192, Constraint : False
+|2025-07-30 12:09:22| MAE - 0.2578 MSE - 0.2183 RMSE - 0.4672 MAPE - 13.0972 NMAE - 0.4228 NRMSE - 0.5837 Acc_10 - 0.0387 train_time - 108.4763
+|2025-07-30 12:20:44| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 336, Constraint : False
+|2025-07-30 12:20:44| MAE - 0.2964 MSE - 0.2779 RMSE - 0.5272 MAPE - 12.7256 NMAE - 0.4851 NRMSE - 0.6572 Acc_10 - 0.0321 train_time - 401.4655
+|2025-07-30 12:53:18| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 720, Constraint : False
+|2025-07-30 12:53:18| MAE - 0.3419 MSE - 0.3529 RMSE - 0.5940 MAPE - 14.2671 NMAE - 0.5597 NRMSE - 0.7422 Acc_10 - 0.0285 train_time - 1395.5232
+|2025-07-30 15:38:30| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Constraint : False
+|2025-07-30 15:38:30| MAE - 0.2102 MSE - 0.1691 RMSE - 0.4113 MAPE - 13.3690 NMAE - 0.3452 NRMSE - 0.5144 Acc_10 - 0.0509 train_time - 76.8421
+|2025-07-30 15:46:10| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Constraint : False
+|2025-07-30 15:46:10| MAE - 0.2092 MSE - 0.1638 RMSE - 0.4047 MAPE - 11.2476 NMAE - 0.3436 NRMSE - 0.5063 Acc_10 - 0.0502 train_time - 146.3747
+
+
+|2025-07-30 15:57:23| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Constraint : False
+|2025-07-30 15:57:23| MAE - 0.1981 MSE - 0.1549 RMSE - 0.3936 MAPE - 11.4542 NMAE - 0.3253 NRMSE - 0.4923 Acc_10 - 0.0576 train_time - 486.1713
+|2025-07-30 16:13:41| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 192, Constraint : False
+|2025-07-30 16:13:41| MAE - 0.2454 MSE - 0.2080 RMSE - 0.4560 MAPE - 12.7019 NMAE - 0.4025 NRMSE - 0.5698 Acc_10 - 0.0436 train_time - 775.9623
+|2025-07-30 16:24:44| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 336, Constraint : False
+|2025-07-30 16:24:44| MAE - 0.2926 MSE - 0.2735 RMSE - 0.5229 MAPE - 13.0470 NMAE - 0.4788 NRMSE - 0.6520 Acc_10 - 0.0349 train_time - 390.5908
+|2025-07-30 16:48:50| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 720, Constraint : False
+|2025-07-30 16:48:50| MAE - 0.3422 MSE - 0.3525 RMSE - 0.5937 MAPE - 13.8983 NMAE - 0.5602 NRMSE - 0.7419 Acc_10 - 0.0288 train_time - 911.8271
+|
+
+|2025-08-13 20:21:08| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 96, Constraint : False
+|2025-08-13 20:21:08| MAE - 0.1977 MSE - 0.1551 RMSE - 0.3938 MAPE - 10.9352 NMAE - 0.3247 NRMSE - 0.4926 Acc_10 - 0.0580 train_time - 693.5284
+|2025-08-13 20:31:05| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 192, Constraint : False
+|2025-08-13 20:31:05| MAE - 0.2473 MSE - 0.2104 RMSE - 0.4587 MAPE - 12.6844 NMAE - 0.4055 NRMSE - 0.5731 Acc_10 - 0.0432 train_time - 409.6099
+|2025-08-13 20:51:26| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 336, Constraint : False
+|2025-08-13 20:51:26| MAE - 0.2932 MSE - 0.2731 RMSE - 0.5226 MAPE - 13.5723 NMAE - 0.4798 NRMSE - 0.6515 Acc_10 - 0.0345 train_time - 929.1019
+|2025-08-13 21:22:50| Dataset : weather, Model : transformer, Density : 0.700, d_model : 64, Rank : 40, Seq_Len : 96, Pred_Len : 720, Constraint : False
+|2025-08-13 21:22:50| MAE - 0.3412 MSE - 0.3523 RMSE - 0.5936 MAPE - 14.7449 NMAE - 0.5585 NRMSE - 0.7417 Acc_10 - 0.0287 train_time - 1346.7416
