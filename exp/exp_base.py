@@ -14,7 +14,10 @@ class BasicModel(torch.nn.Module):
     def __init__(self, config):
         super(BasicModel, self).__init__()
         self.config = config
-        self.scaler = torch.amp.GradScaler(config.device)  # ✅ 初始化 GradScaler
+        # pytorch2.0使用这个
+        self.scaler = torch.cuda.amp.GradScaler(config.device)  # ✅ 初始化 GradScaler
+        # 非pytorch2.0且这里出错了可以尝试使用下面这个
+        # self.scaler = torch.amp.GradScaler(config.device)  # ✅ 初始化 GradScaler
 
     def forward(self, *x):
         y = self.model(*x)

@@ -3,13 +3,11 @@ from math import sqrt
 import torch
 import torch.nn as nn
 
-from transformers import LlamaConfig, LlamaModel, LlamaTokenizer, GPT2Config, GPT2Model, GPT2Tokenizer, BertConfig, \
-    BertModel, BertTokenizer
+
 from baselines.TimeLLM.Embed import PatchEmbedding
-import transformers
+
 from baselines.TimeLLM.StandardNorm import Normalize
 
-transformers.logging.set_verbosity_error()
 
 
 # 平铺做Liner
